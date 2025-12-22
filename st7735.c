@@ -23,7 +23,7 @@ void tftInit(void){
     pinMode(GPIOA, 7, 2);
 
     GPIOA->AFR[0] &= ~((0xF << 20) | (0xF << 28)); //Clears Alternate Function Register for PA5 and PA7
-    GPIOA->AFR[0] |= ((5 << 20) | (5 << 28)); //Sets Alternate Function Register to 0 (Mode for SPI1) for PA5 and PA7
+    GPIOA->AFR[0] |= ((5 << 20) | (5 << 28)); //Sets Alternate Function Register to 5 (Mode for SPI1) for PA5 and PA7
 
     pinMode(GPIOA, 3, 1); //DC (Data/Command - Low = Command | High = data) Output
     pinMode(GPIOA, 4, 1); //CS (Chip Select - When Low Listen SPI, When High Ignore SPI) Output
