@@ -23,7 +23,7 @@ void tftInit(void){
     pinMode(GPIOA, 7, 2);
 
     GPIOA->AFR[0] &= ~((0xF << 20) | (0xF << 28)); //Clears Alternate Function Register for PA5 and PA7
-    GPIOA->AFR[0] |= ((5 << 20) | (5 << 28)); //Sets Alternate Function Register to 5 (Mode for SPI1) for PA5 and PA7
+    GPIOA->AFR[0] |= ((5 << 20) | (5 << 28)); //Sets Alternate Function Register to 0 (Mode for SPI1) for PA5 and PA7
 
     pinMode(GPIOA, 3, 1); //DC (Data/Command - Low = Command | High = data) Output
     pinMode(GPIOA, 4, 1); //CS (Chip Select - When Low Listen SPI, When High Ignore SPI) Output
@@ -39,55 +39,8 @@ void tftInit(void){
 
     displayReset();
 
-    sendByte(0x01, 0);   // Software reset
-    delay(150000);
-
     sendByte(0x11, 0);   // Sleep out
     delay(120000);
-
-    /* Frame rate control */
-    sendByte(0xB1, 0);
-    sendByte(0x01, 1);
-    sendByte(0x2C, 1);
-    sendByte(0x2D, 1);
-
-    sendByte(0xB2, 0);
-    sendByte(0x01, 1);
-    sendByte(0x2C, 1);
-    sendByte(0x2D, 1);
-
-    sendByte(0xB3, 0);
-    sendByte(0x01, 1);
-    sendByte(0x2C, 1);
-    sendByte(0x2D, 1);
-    sendByte(0x01, 1);
-    sendByte(0x2C, 1);
-    sendByte(0x2D, 1);
-
-    /* Power control */
-    sendByte(0xC0, 0);
-    sendByte(0xA2, 1);
-    sendByte(0x02, 1);
-    sendByte(0x84, 1);
-
-    sendByte(0xC1, 0);
-    sendByte(0xC5, 1);
-
-    sendByte(0xC2, 0);
-    sendByte(0x0A, 1);
-    sendByte(0x00, 1);
-
-    sendByte(0xC3, 0);
-    sendByte(0x8A, 1);
-    sendByte(0x2A, 1);
-
-    sendByte(0xC4, 0);
-    sendByte(0x8A, 1);
-    sendByte(0xEE, 1);
-
-    /* VCOM */
-    sendByte(0xC5, 0);
-    sendByte(0x0E, 1);
 
     /* Pixel format */
     sendByte(0x3A, 0);
@@ -96,19 +49,6 @@ void tftInit(void){
     /* Memory access control */
     sendByte(0x36, 0);
     sendByte(0xC0, 1);  // IMPORTANT for this panel
-
-    /* Gamma */
-    sendByte(0xE0, 0);
-    sendByte(0x02,1); sendByte(0x1C,1); sendByte(0x07,1); sendByte(0x12,1);
-    sendByte(0x37,1); sendByte(0x32,1); sendByte(0x29,1); sendByte(0x2D,1);
-    sendByte(0x29,1); sendByte(0x25,1); sendByte(0x2B,1); sendByte(0x39,1);
-    sendByte(0x00,1); sendByte(0x01,1); sendByte(0x03,1); sendByte(0x10,1);
-
-    sendByte(0xE1, 0);
-    sendByte(0x03,1); sendByte(0x1D,1); sendByte(0x07,1); sendByte(0x06,1);
-    sendByte(0x2E,1); sendByte(0x2C,1); sendByte(0x29,1); sendByte(0x2D,1);
-    sendByte(0x2E,1); sendByte(0x2E,1); sendByte(0x37,1); sendByte(0x3F,1);
-    sendByte(0x00,1); sendByte(0x00,1); sendByte(0x02,1); sendByte(0x10,1);
 
     /* Display on */
     sendByte(0x29, 0);
