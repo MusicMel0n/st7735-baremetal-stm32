@@ -1,6 +1,7 @@
 #include <stm32f303x8.h>
 #include "st7735.h"
 #include "gpio.h"
+#include "font16.h"
 
 #define X_OFFSET 2
 #define Y_OFFSET 1
@@ -76,7 +77,6 @@ void sendRawByte(uint8_t data){
     while((SPI1->SR & (1 << 1)) == 0); //Wait until TXE is 1 meaning the transmit buffer is empty and we can send a new byte
     *(volatile uint8_t*)&SPI1->DR = data; //Writes the byte to the Data Register but treats it as a pointer to an 8bit location as DR is 16bits
 }
-
 
 void displayReset(void){
     GPIOA->ODR &= ~(1 << 1); // RES = 0
@@ -166,4 +166,32 @@ void drawRectangle(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint16_t colo
 
     //bottom edge
     drawFillRectangle(x, y + h - thickness, w, thickness, color);
+}
+
+void drawChar(uint16_t x, uint16_t y, char c, uint16_t color){
+    if (c > 127 || c < 32){ //As the font only ranges from ASCII 32 ' ' to ASCII 127 DEL
+        return;
+    }
+
+    const uint16_t *glyph = font[c - 32]; //Holds the address to the row containing the hex values for the character
+
+    //The CPU stores each hex value as binary so we can iterate through each of the hex values and draw a pixel where there is a 1
+    for(int row = 0; row < FONT_HEIGHT; row++){ //Iterates through each value for the glyph
+        uint16_t bits = glyph[row]; //Binary bitmask
+        for(int col = 0; col < FONT_WIDTH; col++){ //Iterates through each bit
+            if(bits & (1 << (FONT_WIDTH - 1 - col))){ //Check if the bit is on | (FONT_WIDTH - 1 - col) so we start on bit 10 from the right (Always ignore first 5) | these values depend on the font
+                drawPixel(x + col, y + row, color); //Draw pixel and shift it right depending on which col we are on and down by the row
+            }
+        }
+    }
+}
+
+void drawString(uint16_t x, uint16_t y, const char str[], uint16_t color){
+    uint8_t index = 0;
+
+    while(str[index] != '\0'){
+        drawChar(x, y, str[index], color);
+        x += FONT_WIDTH;
+        index++;
+    }
 }

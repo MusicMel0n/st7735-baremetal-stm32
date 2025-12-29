@@ -14,5 +14,7 @@ void drawPixel(uint16_t x, uint16_t y, uint16_t color);
 void fillScreen(uint16_t color);
 void drawFillRectangle(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint16_t color);
 void drawRectangle(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint16_t color, uint16_t thickness);
+void drawChar(uint16_t x, uint16_t y, char c, uint16_t color);
+void drawString(uint16_t x, uint16_t y, const char str[], uint16_t color);
 
 #endif
