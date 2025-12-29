@@ -44,6 +44,20 @@ drawRectangle(x, y, w, h, color, thickness);
 
 Draws a rectangle outline with a specified border thickness.
 
+### Text Rendering
+
+```c
+drawChar(x, y, char c, color);
+```
+
+Draws a single ASCII character using the loaded font
+
+```c
+drawString(x, y, char str[], color);
+```
+
+Draws a null-terminated string starting at the given position
+
 ## Compatibility
 
 Tested On:
@@ -58,7 +72,7 @@ The display driver ('st7735.c') expects a font header called 'font16.h'
 
 ### Font Compatibility
 
-The script works best with **monospaced fonts.** Proportional fonts may appear overly spaced as variable glpyh widths are not currently handled
+The script works best with **monospaced fonts.** Proportional fonts may appear overly spaced as variable glyph widths are not currently handled
 
 ## Font Generator Script (font/convertFont.py)
 
