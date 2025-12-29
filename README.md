@@ -1,6 +1,49 @@
 # st7735-baremetal-stm32
 Bare-metal SPI driver for ST7735 TFT displays on STM32
 
+## Usage
+
+### Required Includes
+```c
+#include "st7735.h"
+```
+
+### Initialization
+
+Before using any display or drawing functions, the display must be initialized:
+
+```c
+tftInit();
+```
+
+This must be called once on startup
+
+### Drawing Functions
+
+```c
+drawPixel(x, y, color);
+```
+
+Draws a single pixel at the specified screen coordinates
+
+```c
+fillScreen(color);
+```
+
+Fills the entire display with a single colour
+
+```c
+void drawFillRectangle(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint16_t color);
+```
+
+Draws a filled rectangle starting at ```(x, y)``` with the given width and height.
+
+```c
+drawRectangle(x, y, w, h, color, thickness);
+```
+
+Draws a rectangle outline with a specified border thickness.
+
 ## Compatibility
 
 Tested On:
@@ -26,3 +69,4 @@ You can convert any font to this format easily using tools such as fontForge
 ### Usage
 ```bash
 python convertFont.py inputFont.bdf font16.h
+```
