@@ -13,6 +13,10 @@ This project uses a bitmap font stored in a C header file
 
 The display driver ('st7735.c') expects a font header called 'font16.h'
 
+### Font Compatibility
+
+The script works best with **monospaced fonts.** Proportional fonts may appear overly spaced as variable glpyh widths are not currently handled
+
 ## Font Generator Script (font/convertFont.py)
 
 A python script is provided to convert a '.bdf' bitmap font into a C header compatible with this project
