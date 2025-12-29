@@ -25,7 +25,8 @@ drawPixel(x, y, color);
 ```
 
 Draws a single pixel at the specified screen coordinates
----
+
+
 ```c
 fillScreen(color);
 ```
